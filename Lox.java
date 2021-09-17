@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.Console;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
@@ -7,9 +8,10 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Scanner;
 
-import jdk.nashorn.internal.parser.Token;
+
 
 public class Lox{
+    static boolean hadError = false;
     public static void main(String[] args)throws IOException{
         if(args.length > 1){
             System.out.println("Usage: jlox [script]");
@@ -24,6 +26,8 @@ public class Lox{
     private static void runFile(String path)throws IOException{
         byte[] bytes = Files.readAllBytes(Paths.get(path));
         run(new String(bytes, Charset.defaultCharset()));
+
+        if(hadError) System.exit(65);
     }
 
     private static void REPL()throws IOException{
@@ -31,10 +35,11 @@ public class Lox{
         BufferedReader reader = new BufferedReader(input);
 
         for(;;){
-            System.out.println("jlox>");
+            System.out.println("jlox>>>");
             String line = reader.readLine();
-            if(line == null);
+            if(line == null) break;
             run(line);
+            hadError = false;
         }
     }
 
@@ -45,5 +50,14 @@ public class Lox{
         for(Token token : tokens){
             System.out.println(token);
         }
+    }
+
+    static void error(int line, String message){
+        report(line, "", message);
+    }
+
+    private static void report(int line, String where, String message){
+        System.err.println(ConsoleColors.RED_BOLD+"ERROR"+ConsoleColors.RESET+"[line "+line+"], "+where+": "+message);
+        hadError = true;
     }
 }
