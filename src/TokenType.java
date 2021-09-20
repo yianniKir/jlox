@@ -1,3 +1,4 @@
+package src;
 enum TokenType {
     // Single-character tokens.
     LEFT_PAREN, RIGHT_PAREN, LEFT_BRACE, RIGHT_BRACE,
@@ -13,7 +14,7 @@ enum TokenType {
     IDENTIFIER, STRING, NUMBER,
   
     // Keywords.
-    AND, CLASS, ELSE, FALSE, FUNC, FOR, IF, NULL, OR,
+    AND, CLASS, ELSE, FALSE, FN, FOR, IF, NULL, OR,
     PRINT, RETURN, SUPER, THIS, TRUE, VAR, WHILE,
   
     EOF
