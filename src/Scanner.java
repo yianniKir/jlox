@@ -56,12 +56,7 @@ class Scanner{
                     while(peek() != '\n' && !isAtEnd()) advance();
                 }
                 if(match('*')){
-                    while(!isAtEnd()){
-                        c = advance();
-                        if(c == '*' && match('/')){
-                            break;
-                        }
-                    }
+                    while(!isAtEnd() && c != '*' && !match('/')) advance();
                 }
                 else {
                     addToken(SLASH);
